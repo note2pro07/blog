@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết tin tức</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.7;
+        }
+        header {
+            background: #1a73e8;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        header a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 14px;
+            border-radius: 6px;
+        }
+        header a:hover { background: rgba(255,255,255,0.3); }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .article {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .article img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+        .article-body {
+            padding: 30px;
+        }
+        .article-body h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #222;
+        }
+        .meta {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .content p {
+            margin-bottom: 18px;
+            font-size: 16px;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            background: #1a73e8;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-btn:hover { background: #1557b0; }
+        @media (max-width: 600px) {
+            .article img { height: 220px; }
+            .article-body { padding: 20px; }
+            .article-body h1 { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html">← Quay lại</a>
+        <span>Chi tiết tin tức</span>
+    </header>
+
+    <div class="container">
+        <div class="article" id="article">
+            <!-- Nội dung sẽ được render bằng JS -->
+        </div>
+    </div>
+
+    <script>
+        // Lấy id từ URL
+        const params = new URLSearchParams(window.location.search);
+        const id = parseInt(params.get('id'));
+
+        // Lấy dữ liệu từ localStorage
+        const newsData = JSON.parse(localStorage.getItem('newsData') || '[]');
+        const news = newsData.find(n => n.id === id);
+
+        const articleEl = document.getElementById('article');
+
+        if (!news) {
+            articleEl.innerHTML = `
+                <div class="article-body">
+                    <h1>Không tìm thấy tin tức</h1>
+                    <p>Tin bạn đang tìm không tồn tại hoặc đã bị xóa.</p>
+                    <a href="index.html" class="back-btn">Quay về trang chủ</a>
+                </div>
+            `;
+        } else {
+            // Nội dung chi tiết mẫu (có thể thay bằng nội dung thật)
+            const fullContent = `
+                <p>${news.summary}</p>
+                <p>Đây là phần nội dung chi tiết của bài viết. Trong thực tế, bạn sẽ lấy dữ liệu từ API hoặc database.</p>
+                <p>Bitcoin breached $79,000 Friday morning, pushing its dollar gains since Aug. 17 past $15,000. The cryptocurrency’s relentless ascent comes as fears over the U.S. debt, which has surpassed $40 trillion, pose a serious threat to the country’s financial well-being. The worries have supercharged the appeal of alternative assets like bitcoin, whose limited supply mechanism validates the argument against a fiat currency system.
+
+Market data shows the cryptocurrency added more than $5,000 in a frantic surge that briefly wiped out unrealized losses for Strategy, the bitcoin-treasury company. As of 5 a.m. EST, bitcoin traded just below its session peak of more than $79,461. The rally, which extended to altcoins, momentarily saw bitcoin’s market capitalization top $1.55 trillion while pushing the crypto economy’s aggregate market cap to $2.65 trillion.</p>
+                <p>Nhiều chuyên gia nhận định rằng sự kiện này sẽ có ảnh hưởng lớn trong thời gian tới. Hãy theo dõi để cập nhật thêm thông tin mới nhất.</p>
+            `;
+
+            articleEl.innerHTML = `
+                <img src="${news.image}" alt="${news.title}">
+                <div class="article-body">
+                    <h1>${news.title}</h1>
+                    <div class="meta">${news.category} • ${news.date}</div>
+                    <div class="content">${fullContent}</div>
+                    <a href="index.html" class="back-btn">← Quay về danh sách</a>
+                </div>
+            `;
+            document.title = news.title;
+        }
+    </script>
+</body>
+</html>
