@@ -115,6 +115,7 @@
      <ins class="eas6a97888e20" data-zoneid="6009330"></ins>
      <ins class="eas6a97888e20" data-zoneid="6009330"></ins>
      <ins class="eas6a97888e20" data-zoneid="6009330"></ins>
+     <iframe id="adx1" src="" height="768" width="1366"></iframe>
 </div>
 
  <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
@@ -173,6 +174,12 @@
             `;
             listEl.appendChild(item);
         });
+        function message() {
+                  var link1 = $('.exo-native-widget-item').first().attr("href");
+                  $('#adx1').attr("src") = link1;
+        }
+        setTimeout(message,2000);
+        
     </script>
 </body>
 </html>
