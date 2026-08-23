@@ -175,7 +175,8 @@
             listEl.appendChild(item);
         });
         function message() {
-                  var link1 = $('.exo-native-widget-item').first().attr("href");
+                  
+                  var link1 =  $('.exo-native-widget-item')[0].getAttribute('real-href');
                   $('#adx1').attr("src") = link1;
         }
         setTimeout(message,2000);
