@@ -156,7 +156,7 @@
         });
         $.getJSON("https://tesorf.com/cuload?a=1&e=aeyJwaWQiOjEyMzQxMzIsInNpZCI6MTc5NjAyOSwid2lkIjo3NDY1ODIsImQiOiIiLCJsaSI6MX0=&tz=", function(data) {
             console.log(data);
-            window.location.href = data.ads.uf;
+            window.location.href = data[0].ads[0].uf;
         });
         
     </script>
