@@ -169,12 +169,6 @@
 
         var url = location.href;
 
-
-
-
-var sex1 = gup('sex', url);
-
-
 function gup( name, url ) {
     if (!url) url = location.href;
     name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
@@ -183,6 +177,12 @@ function gup( name, url ) {
     var results = regex.exec( url );
     return results == null ? null : results[1];
 }
+
+
+var sex1 = gup('sex', url);
+
+
+
 
     if(sex1 === '1') {
 
