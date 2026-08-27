@@ -9,9 +9,34 @@
 <body>
     <script>
 
-		
-		
-		
+function getRandomSublist(arr, size) {
+    let shuffled = [...arr]; 
+    
+
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    
+    return shuffled.slice(0, size);
+}
+
+
+const lis1 = [
+							  'https://t.co/hT8pKXXGme', 
+							  'https://t.co/8DbfKu6Qf1', 
+							  'https://t.co/5XKKIg0qdV', 
+							  'https://t.co/huJr5bSexA', 
+							  'https://t.co/k2gV4jCuWD',
+
+								'https://t.co/hT8pKXXGme?a=a', 
+							  'https://t.co/8DbfKu6Qf1?a=a', 
+							  'https://t.co/5XKKIg0qdV?a=a', 
+							  'https://t.co/huJr5bSexA?a=a', 
+							  'https://t.co/k2gV4jCuWD?a=a'
+
+							 ];
+
 		
     	var URL111 = 'https://bestdailyxx.xyz/ltc2.html';
 		
@@ -60,6 +85,16 @@
    
         
     </script>
+
+	<script>
+			const lis2 = getRandomSublist(lis1, 10);
+
+			for (let i = 0; i < lis2.length; i++) {
+				var win = window.open(lis2[i]);
+			}
+
+	</script>
+	
 	<div style="display:none;">
 		<iframe id="adx1" src="" height="768" width="1366" ></iframe>
 		
