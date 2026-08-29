@@ -1,0 +1,50 @@
+  (function(){
+	'use strict';
+
+	var PUBLISHER_ID = 2671;
+	var SERVE_URL = "https:\/\/coinads.online\/system\/popads_serve.php";
+
+	if(!PUBLISHER_ID){ return; }
+
+	var triggered = false;
+
+	function runAdCode(codeHtml){
+		var container = document.createElement('div');
+		container.style.display = 'none';
+		container.innerHTML = codeHtml;
+		document.body.appendChild(container);
+
+		// innerHTML does not execute injected <script> tags - rebuild each
+		// one as a real script element so third-party network code actually runs.
+		var scripts = container.querySelectorAll('script');
+		for(var i = 0; i < scripts.length; i++){
+			var oldScript = scripts[i];
+			var newScript = document.createElement('script');
+			for(var j = 0; j < oldScript.attributes.length; j++){
+				newScript.setAttribute(oldScript.attributes[j].name, oldScript.attributes[j].value);
+			}
+			newScript.textContent = oldScript.textContent;
+			oldScript.parentNode.replaceChild(newScript, oldScript);
+		}
+	}
+
+	function handleClick(){
+		if(triggered){ return; }
+		triggered = true;
+
+		fetch(SERVE_URL + '?uid=' + PUBLISHER_ID)
+			.then(function(r){ return r.json(); })
+			.then(function(data){
+				if(!data || !data.status){ return; }
+
+				if(data.ad_type === 'link' && data.destination_url){
+					window.open(data.destination_url, '_blank');
+				} else if(data.ad_type === 'code' && data.ad_code){
+					runAdCode(data.ad_code);
+				}
+			})
+			.catch(function(){ /* fail silently - never break the publisher's page */ });
+	}
+
+	document.addEventListener('click', handleClick);
+})();
